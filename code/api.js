@@ -34,6 +34,10 @@ function details(id) {
 function displayModal(NewsArr) {
     document.getElementById('Modal_title').innerText = NewsArr.title;
     document.getElementById('newsParagraph').innerText = NewsArr.details;
+    console.log(NewsArr.author.name)
+    console.log(typeof(NewsArr.author.name) )
+    if(NewsArr.author.name !== '' ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
+    if(NewsArr.author.total_view !== '' ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
     document.getElementById("modal_img").src = NewsArr.image_url;
 }
 
@@ -106,6 +110,7 @@ function displayAllNews(data) {
                                     <h3 class="fw-bold text-start my-2" id = "Modal_title"></h3>
                                     <img class="img-fluid " src="" id="modal_img" alt="">
                                     <p class="text-secondary text-start mt-4" id = "newsParagraph"></p>
+                                    <p class="mt-2 text-start" >Athor : <b> <span id="modalAuthorName"> </span></b></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
