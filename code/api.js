@@ -10,10 +10,11 @@ function displayCategory(data) {
         const button = document.createElement('button');
         console.log(element.category_id);
         categorieNews(element.category_id);
-        button.onclick =  function showNews(){
+        document.getElementById('categoryName').innerText = element.category_name;
+        button.onclick = function showNews() {
             categorieNews(element.category_id);
-            console.log( _.size(categorieNews(element.category_id)) );
-        } 
+            document.getElementById('categoryName').innerText = element.category_name;
+        }
         button.classList.add("btn");
         button.classList.add("btn-primary");
         button.innerText = element.category_name;
@@ -30,31 +31,33 @@ function details(id) {
         .catch(error => console.log(error))
 }
 
-function displayModal(NewsArr){
+function displayModal(NewsArr) {
     document.getElementById('Modal_title').innerText = NewsArr.title;
     document.getElementById('newsParagraph').innerText = NewsArr.details;
     document.getElementById("modal_img").src = NewsArr.image_url;
-    
-
-
 }
 
-// all news adding by categori 
-function categorieNews(catId){
-fetch(`https://openapi.programming-hero.com/api/news/category/${catId}`)
-    .then(res => res.json())
-    .then(data => displayAllNews(data))
-    .catch(error => console.log(error))
+// all news adding by category
+function categorieNews(catId) {
+    fetch(`https://openapi.programming-hero.com/api/news/category/${catId}`)
+        .then(res => res.json())
+        .then(data => displayAllNews(data))
+        .catch(error => console.log(error))
 }
 
 let postCount = 0;
 
 function displayAllNews(data) {
-    console.log(data)
+    data.data.sort((a, b) =>
+        parseFloat(b.total_view) - parseFloat(a.total_view)
+    );
+    console.log(data.data)
     const newsContainer = document.getElementById('news_container');
     newsContainer.innerHTML = '';
     data.data.forEach(element => {
         postCount++;
+
+
         const rowDiv = document.createElement('div');
         rowDiv.innerHTML = `
             <div class= " row my-3 bg-white p-3 rounded" >
@@ -120,5 +123,6 @@ function displayAllNews(data) {
     })
 
     console.log(postCount);
+    document.getElementById('totalPostNumber').innerText = postCount;
     postCount = 0;
 }

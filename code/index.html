@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quick-News-site</title>
+    <title>Quick-News</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <!-- google font  -->
@@ -17,11 +17,13 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color:#dcdddd;
+            background-color: #dcdddd;
         }
-        .bg-full{
-            background-color:#dcdddd;
+
+        .bg-full {
+            background-color: #dcdddd;
         }
+
         .news_text p {
             width: 100%;
             display: -webkit-box;
@@ -38,9 +40,9 @@
 <body>
     <div class="container bg-full">
         <header>
-            <nav class="navbar navbar-expand-lg bg-light py-3 ">
+            <nav class="navbar navbar-expand-lg py-4 ">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Quick-News-Site</a>
+                    <a class="navbar-brand" href="#">Quick-News</a>
                     <form class="d-flex" role="search">
                         <a href="#" class="fw-bold mx-2 btn btn-outline-primary">News</a>
                         <a href="#" class="fw-bold mx-2 btn btn-outline-primary">Blog</a>
@@ -49,12 +51,31 @@
         </header>
         <hr class="my-0">
         <main>
-            <section class="cetagories py-4 bg-light">
+            <section class="cetagories py-4">
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-12">
                             <div class="btn-group" id="category_container">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="view_setting container">
+                <div class="row py-3 bg-light rounded" style="align-items: center;">
+                    <div class="col-6 text-center">
+                        <p class="m-0"><span id="totalPostNumber"></span> items found for category <span id=categoryName></span></p>
+                    </div>
+                    <div class="col-6 text-center" >
+                        <div class="dropdown">
+                            <span>Sort By View:</span>
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Default
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Default</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -65,6 +86,9 @@
                     </div>
                 </div>
             </section>
+            <footer>
+                <p class="bg-light text-center py-5 mt-3">Copyright 2022 - <a href="#">Quick-News</a></p>
+            </footer>
         </main>
     </div>
 
