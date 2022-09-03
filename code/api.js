@@ -26,7 +26,6 @@ function details(id) {
     const url = `https://openapi.programming-hero.com/api/news/${id}`;
     fetch(url)
         .then(res => res.json())
-        // .then(res => console.log(res.data[0]))
         .then(res => displayModal(res.data[0]))
         .catch(error => console.log(error))
 }
@@ -36,8 +35,9 @@ function displayModal(NewsArr) {
     document.getElementById('newsParagraph').innerText = NewsArr.details;
     console.log(NewsArr.author.name)
     console.log(typeof(NewsArr.author.name) )
-    if(NewsArr.author.name !== '' ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
-    if(NewsArr.author.total_view !== '' ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
+    if(!(!NewsArr.author.name)  ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
+    if(!(!NewsArr.total_view) ? document.getElementById('modalViewCount').innerText = NewsArr.total_view : document.getElementById('modalViewCount').innerText ='Data Not Found');
+    document.getElementById('modalPublish').innerText = NewsArr.author.published_date;
     document.getElementById("modal_img").src = NewsArr.image_url;
 }
 
@@ -55,7 +55,6 @@ function displayAllNews(data) {
     data.data.sort((a, b) =>
         parseFloat(b.total_view) - parseFloat(a.total_view)
     );
-    console.log(data.data)
     const newsContainer = document.getElementById('news_container');
     newsContainer.innerHTML = '';
     data.data.forEach(element => {
@@ -111,6 +110,8 @@ function displayAllNews(data) {
                                     <img class="img-fluid " src="" id="modal_img" alt="">
                                     <p class="text-secondary text-start mt-4" id = "newsParagraph"></p>
                                     <p class="mt-2 text-start" >Athor : <b> <span id="modalAuthorName"> </span></b></p>
+                                    <p class="mt-2 text-start" >View : <b> <span id="modalViewCount"> </span></b></p>
+                                    <p class="mt-2 text-start" >Published : <b> <span id="modalPublish"> </span></b></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -126,8 +127,6 @@ function displayAllNews(data) {
 
         newsContainer.appendChild(rowDiv);
     })
-
-    console.log(postCount);
     document.getElementById('totalPostNumber').innerText = postCount;
     postCount = 0;
 }
