@@ -1,8 +1,11 @@
 //adding categories
-fetch('https://openapi.programming-hero.com/api/news/categories')
-    .then(res => res.json())
-    .then(res => displayCategory(res))
-    .catch(error => console.log(error))
+try {
+    fetch('https://openapi.programming-hero.com/api/news/categories')
+        .then(res => res.json())
+        .then(res => displayCategory(res))
+}
+catch { (error => console.log(error)) }
+
 
 function displayCategory(data) {
     const catagoryContainer = document.getElementById('category_container');
@@ -23,20 +26,22 @@ function displayCategory(data) {
 }
 
 function details(id) {
-    const url = `https://openapi.programming-hero.com/api/news/${id}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(res => displayModal(res.data[0]))
-        .catch(error => console.log(error))
+    try {
+        const url = `https://openapi.programming-hero.com/api/news/${id}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(res => displayModal(res.data[0]))
+    }
+    catch { (error => console.log(error)) }
 }
 
 function displayModal(NewsArr) {
     document.getElementById('Modal_title').innerText = NewsArr.title;
     document.getElementById('newsParagraph').innerText = NewsArr.details;
     console.log(NewsArr.author.name)
-    console.log(typeof(NewsArr.author.name) )
-    if(!(!NewsArr.author.name)  ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText ='Data Not Found');
-    if(!(!NewsArr.total_view) ? document.getElementById('modalViewCount').innerText = NewsArr.total_view : document.getElementById('modalViewCount').innerText ='Data Not Found');
+    console.log(typeof (NewsArr.author.name))
+    if (!(!NewsArr.author.name) ? document.getElementById('modalAuthorName').innerText = NewsArr.author.name : document.getElementById('modalAuthorName').innerText = 'Data Not Found');
+    if (!(!NewsArr.total_view) ? document.getElementById('modalViewCount').innerText = NewsArr.total_view : document.getElementById('modalViewCount').innerText = 'Data Not Found');
     document.getElementById('modalPublish').innerText = NewsArr.author.published_date;
     document.getElementById("modal_img").src = NewsArr.image_url;
 }
@@ -99,25 +104,25 @@ function displayAllNews(data) {
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">News Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">News Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3 class="fw-bold text-start my-2" id = "Modal_title"></h3>
+                                        <img class="img-fluid " src="" id="modal_img" alt="">
+                                        <p class="text-secondary text-start mt-4" id = "newsParagraph"></p>
+                                        <p class="mt-2 text-start" >Athor : <b> <span id="modalAuthorName"> </span></b></p>
+                                        <p class="mt-2 text-start" >View : <b> <span id="modalViewCount"> </span></b></p>
+                                        <p class="mt-2 text-start" >Published : <b> <span id="modalPublish"> </span></b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                    </div>
                                 </div>
-                                <div class="modal-body">
-                                    <h3 class="fw-bold text-start my-2" id = "Modal_title"></h3>
-                                    <img class="img-fluid " src="" id="modal_img" alt="">
-                                    <p class="text-secondary text-start mt-4" id = "newsParagraph"></p>
-                                    <p class="mt-2 text-start" >Athor : <b> <span id="modalAuthorName"> </span></b></p>
-                                    <p class="mt-2 text-start" >View : <b> <span id="modalViewCount"> </span></b></p>
-                                    <p class="mt-2 text-start" >Published : <b> <span id="modalPublish"> </span></b></p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                                </div>
-                            </div>
                             </div>
                         </div>
                     </div>
