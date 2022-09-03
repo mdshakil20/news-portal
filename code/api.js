@@ -8,6 +8,12 @@ function displayCategory(data) {
     const catagoryContainer = document.getElementById('category_container');
     data.data.news_category.forEach(element => {
         const button = document.createElement('button');
+        console.log(element.category_id);
+        categorieNews(element.category_id);
+        button.onclick =  function showNews(){
+            categorieNews(element.category_id);
+            console.log( _.size(categorieNews(element.category_id)) );
+        } 
         button.classList.add("btn");
         button.classList.add("btn-primary");
         button.innerText = element.category_name;
@@ -15,85 +21,104 @@ function displayCategory(data) {
     });
 }
 
-// all news addind 
-fetch('https://openapi.programming-hero.com/api/news/category/01')
+function details(id) {
+    const url = `https://openapi.programming-hero.com/api/news/${id}`;
+    fetch(url)
+        .then(res => res.json())
+        // .then(res => console.log(res.data[0]))
+        .then(res => displayModal(res.data[0]))
+        .catch(error => console.log(error))
+}
+
+function displayModal(NewsArr){
+    document.getElementById('Modal_title').innerText = NewsArr.title;
+    document.getElementById('newsParagraph').innerText = NewsArr.details;
+    document.getElementById("modal_img").src = NewsArr.image_url;
+    
+
+
+}
+
+// all news adding by categori 
+function categorieNews(catId){
+fetch(`https://openapi.programming-hero.com/api/news/category/${catId}`)
     .then(res => res.json())
     .then(data => displayAllNews(data))
     .catch(error => console.log(error))
+}
 
+let postCount = 0;
 
 function displayAllNews(data) {
-    // console.log(data)
+    console.log(data)
     const newsContainer = document.getElementById('news_container');
+    newsContainer.innerHTML = '';
     data.data.forEach(element => {
+        postCount++;
         const rowDiv = document.createElement('div');
         rowDiv.innerHTML = `
-                            <div class= " row my-3 bg-white p-3 rounded" >
-                                    <div class="col-lg-3">
-                                    <img class="img-fluid " src="${element.thumbnail_url}" alt="">
-                                </div>
-                                <div class="col-lg-9 ">
-                                    <div class = "news_text"> 
-                                        <h4 class="fw-bold my-2">${element.title}</h4>
-                                        <p class="text-secondary">${element.details}</p>
-                                    </div>
-                                    
-                                    <div class="row mt-4">
-                                        <div class="d-flex col-lg-3">
-                                            <img style="width:59px" src="${element.author.img}" alt="" class="img-fluid rounded-circle">
-                                            <div class="autore_info ms-3 ">
-                                                <p class="my-0 ">${element.author.name}</p>
-                                                <p class="my-0 ">${element.author.published_date.slice(0,10)}</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 text-center mt-2 ">
-                                            <i class="fa fa-eye fs-4 fw-bold"></i>
-                                            <span class="ms-2 fw-bold">${element.total_view}</span>
-                                        </div>
-                                        <div class="col-lg-3 text-center mt-2 ">
-                                            <i class="fa fa-star text-warning"></i>
-                                            <i class="fa fa-star text-warning"></i>
-                                            <i class="fa fa-star text-warning"></i>
-                                            <i class="fa fa-star text-warning"></i>
-                                            <i class="fa fa-star-half-o text-warning "></i>
-                                        </div>
-                                        <div class="col-lg-3 text-end mt-2 ">
-                                            <!-- Button trigger modal -->
-                                            <button type="button" onclick =  class="border-0 btn " data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-arrow-right text-primary "></i></button>
+            <div class= " row my-3 bg-white p-3 rounded" >
+                    <div class="col-lg-3">
+                    <img class="img-fluid " src="${element.thumbnail_url}" alt="">
+                </div>
+                <div class="col-lg-9 ">
+                    <div class = "news_text"> 
+                        <h4 class="fw-bold my-2">${element.title}</h4>
+                        <p class="text-secondary">${element.details}</p>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="d-flex col-lg-3">
+                            <img style="width:59px;height:57px" src="${element.author.img}" alt="" class="img-fluid rounded-circle">
+                            <div class="autore_info ms-3 ">
+                                <p class="mt-2 ">${element.author.name}</p>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3 text-center mt-2 ">
+                            <i class="fa fa-eye fs-4 fw-bold"></i>
+                            <span class="ms-2 fw-bold">${element.total_view}</span>
+                        </div>
+                        <div class="col-lg-3 text-center mt-2 ">
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star text-warning"></i>
+                            <i class="fa fa-star-half-o text-warning "></i>
+                        </div>
+                        <div class="col-lg-3 text-end mt-2 ">
+                            <!-- Button trigger modal -->
+                                
+                            <button type="button" onclick = details('${element._id}') class="border-0 btn  btn-paimary text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See more<i class="fa fa-arrow-right text-primary ms-1"></i></button>
 
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">News Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h3 class="fw-bold text-start my-2">${element.title}</h3>
-                                                    <img class="img-fluid " src="${element.image_url}" alt="">
-                                                    <p class="text-secondary text-start mt-4">${element.details}</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                </div>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">News Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h3 class="fw-bold text-start my-2" id = "Modal_title"></h3>
+                                    <img class="img-fluid " src="" id="modal_img" alt="">
+                                    <p class="text-secondary text-start mt-4" id = "newsParagraph"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
                                 </div>
                             </div>
-        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
-        // console.log(element['author.img']);
-        // console.log(element.author.img)
-
 
         newsContainer.appendChild(rowDiv);
-
-
-
-
     })
+
+    console.log(postCount);
+    postCount = 0;
 }
