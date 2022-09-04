@@ -63,13 +63,18 @@ function displayAllNews(data) {
     const newsContainer = document.getElementById('news_container');
     newsContainer.innerHTML = '';
     console.log(data.data.length);
-    document.getElementById('totalPostNumber').innerText = (data.data.length); 
+    document.getElementById('totalPostNumber').innerText = (data.data.length);
 
-    data.data.forEach(element => {
+    if (data.data.length == 0) {
+        document.getElementById('noDataFonund').classList.remove('d-none');
+        toggleSpinner(false);
+    }
+    else {
+        document.getElementById('noDataFonund').classList.add('d-none');
 
-
-        const rowDiv = document.createElement('div');
-        rowDiv.innerHTML = `
+        data.data.forEach(element => {
+            const rowDiv = document.createElement('div');
+            rowDiv.innerHTML = `
             <div class= " row my-3 bg-white p-3 rounded" >
                     <div class="col-lg-3">
                     <img class="img-fluid " src="${element.thumbnail_url}" alt="">
@@ -132,18 +137,18 @@ function displayAllNews(data) {
             </div>
         `;
 
-        newsContainer.appendChild(rowDiv);
-    })
-    toggleSpinner(false);
-   
+            newsContainer.appendChild(rowDiv);
+        })
+        toggleSpinner(false);
+    }
 }
 
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
-    if(isLoading){
+    if (isLoading) {
         loaderSection.classList.remove('d-none');
     }
-    else{
+    else {
         loaderSection.classList.add('d-none');
 
     }
