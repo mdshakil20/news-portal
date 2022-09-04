@@ -27,7 +27,7 @@ function displayCategory(data) {
     });
 }
 
-function details(id) {
+const details = id => {
     try {
         const url = `https://openapi.programming-hero.com/api/news/${id}`;
         fetch(url)
@@ -37,7 +37,7 @@ function details(id) {
     catch { (error => console.log(error)) }
 }
 
-function displayModal(NewsArr) {
+const displayModal = NewsArr => {
     document.getElementById('Modal_title').innerText = NewsArr.title;
     document.getElementById('newsParagraph').innerText = NewsArr.details;
     console.log(NewsArr.author.name)
@@ -49,7 +49,7 @@ function displayModal(NewsArr) {
 }
 
 // all news adding by category
-function categorieNews(catId) {
+const categorieNews = catId => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${catId}`)
         .then(res => res.json())
         .then(data => displayAllNews(data))
@@ -58,13 +58,12 @@ function categorieNews(catId) {
 
 
 
-function displayAllNews(data) {
+const displayAllNews = data => {
     data.data.sort((a, b) =>
         parseFloat(b.total_view) - parseFloat(a.total_view)
     );
     const newsContainer = document.getElementById('news_container');
     newsContainer.innerHTML = '';
-    console.log(data.data.length);
     document.getElementById('totalPostNumber').innerText = (data.data.length);
 
     if (data.data.length == 0) {
@@ -144,7 +143,7 @@ function displayAllNews(data) {
         toggleSpinner(false);
     }
 }
-
+// spinner loader 
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if (isLoading) {
