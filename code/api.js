@@ -8,9 +8,10 @@ catch { (error => console.log(error)) }
 
 function displayCategory(data) {
     const catagoryContainer = document.getElementById('category_container');
+
     data.data.news_category.forEach(element => {
+
         const button = document.createElement('button');
-        console.log(element.category_id);
         categorieNews(element.category_id);
         document.getElementById('categoryName').innerText = element.category_name;
         button.onclick = function showNews() {
@@ -20,6 +21,7 @@ function displayCategory(data) {
         }
         button.classList.add("btn");
         button.classList.add("btn-primary");
+        button.classList.add("mt-3");
         button.innerText = element.category_name;
         catagoryContainer.appendChild(button);
     });
@@ -76,35 +78,35 @@ function displayAllNews(data) {
             const rowDiv = document.createElement('div');
             rowDiv.innerHTML = `
             <div class= " row my-3 bg-white p-3 rounded" >
-                    <div class="col-lg-3">
+                    <div class="col-sm-12 col-md-3 col-lg-3 ">
                     <img class="img-fluid " src="${element.thumbnail_url}" alt="">
                 </div>
-                <div class="col-lg-9 ">
+                <div class="col-sm-12 col-md-9 col-lg-9 ">
                     <div class = "news_text"> 
-                        <h4 class="fw-bold my-2">${element.title}</h4>
+                        <h4 class="fw-bold my-3">${element.title}</h4>
                         <p class="text-secondary">${element.details}</p>
                     </div>
                     
                     <div class="row mt-4">
-                        <div class="d-flex col-lg-3">
+                        <div class="d-flex  col-sm-12 col-md-3 col-lg-3 ">
                             <img style="width:59px;height:57px" src="${element.author.img}" alt="" class="img-fluid rounded-circle">
                             <div class="autore_info ms-3 ">
                                 <p class="mt-2 ">${element.author.name}</p>
                                 
                             </div>
                         </div>
-                        <div class="col-lg-3 text-center mt-2 ">
+                        <div class=" col-sm-12 col-md-3 col-lg-3  mt-2 ">
                             <i class="fa fa-eye fs-4 fw-bold"></i>
                             <span class="ms-2 fw-bold">${element.total_view}</span>
                         </div>
-                        <div class="col-lg-3 text-center mt-2 ">
+                        <div class="ccol-sm-12 col-md-3 col-lg-3  mt-2 ">
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star text-warning"></i>
                             <i class="fa fa-star-half-o text-warning "></i>
                         </div>
-                        <div class="col-lg-3 text-end mt-2 ">
+                        <div class=" col-sm-12 col-md-3 col-lg-3  text-end mt-2 ">
                             <!-- Button trigger modal -->
                                 
                             <button type="button" onclick = details('${element._id}') class="border-0 btn  btn-paimary text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">See more<i class="fa fa-arrow-right text-primary ms-1"></i></button>
