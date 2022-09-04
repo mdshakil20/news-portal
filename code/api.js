@@ -6,7 +6,6 @@ try {
 }
 catch { (error => console.log(error)) }
 
-
 function displayCategory(data) {
     const catagoryContainer = document.getElementById('category_container');
     data.data.news_category.forEach(element => {
@@ -15,6 +14,7 @@ function displayCategory(data) {
         categorieNews(element.category_id);
         document.getElementById('categoryName').innerText = element.category_name;
         button.onclick = function showNews() {
+            toggleSpinner(true);
             categorieNews(element.category_id);
             document.getElementById('categoryName').innerText = element.category_name;
         }
@@ -54,7 +54,7 @@ function categorieNews(catId) {
         .catch(error => console.log(error))
 }
 
-let postCount = 0;
+
 
 function displayAllNews(data) {
     data.data.sort((a, b) =>
@@ -62,8 +62,10 @@ function displayAllNews(data) {
     );
     const newsContainer = document.getElementById('news_container');
     newsContainer.innerHTML = '';
+    console.log(data.data.length);
+    document.getElementById('totalPostNumber').innerText = (data.data.length); 
+
     data.data.forEach(element => {
-        postCount++;
 
 
         const rowDiv = document.createElement('div');
@@ -132,6 +134,17 @@ function displayAllNews(data) {
 
         newsContainer.appendChild(rowDiv);
     })
-    document.getElementById('totalPostNumber').innerText = postCount;
-    postCount = 0;
+    toggleSpinner(false);
+   
+}
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none');
+    }
+    else{
+        loaderSection.classList.add('d-none');
+
+    }
 }

@@ -34,7 +34,6 @@
             text-overflow: ellipsis;
 
         }
-        
     </style>
 </head>
 
@@ -45,7 +44,7 @@
                 <div class="container-fluid">
                     <a class="navbar-brand text-primary" href="#">Quick-News</a>
                     <form class="d-flex" role="search">
-                        <a href="#"1  class="fw-bold mx-2 btn btn-outline-primary">News</a>
+                        <a href="#" 1 class="fw-bold mx-2 btn btn-outline-primary">News</a>
                         <a href="blog.html" class="fw-bold mx-2 btn btn-outline-primary">Blog</a>
                 </div>
             </nav>
@@ -62,12 +61,23 @@
                     </div>
                 </div>
             </section>
+
+             <!-- spinner section  -->
+             <section class="spinner d-none" id="loader">
+                <div class="text-center">
+                    <div class="spinner-border my-5 text-success " role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </section>
+
             <section class="view_setting container">
                 <div class="row py-3 bg-light rounded" style="align-items: center;">
                     <div class="col-6 text-center">
-                        <p class="m-0"><span id="totalPostNumber"></span> items found for category <span id=categoryName></span></p>
+                        <p class="m-0"><span id="totalPostNumber"></span> items found for category <span
+                                id=categoryName></span></p>
                     </div>
-                    <div class="col-6 text-center" >
+                    <div class="col-6 text-center">
                         <div class="dropdown">
                             <span>Sort By View:</span>
                             <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -81,6 +91,13 @@
                     </div>
                 </div>
             </section>
+
+            <section class="d-none mt-3 " id="no_Data_fonund">
+                <h4 class="text-center py-5 bg-light rounded-3">No Data Found</h4>
+            </section>
+
+           
+
             <section class="newses">
                 <div class="news">
                     <div class="container" id="news_container">
@@ -88,10 +105,10 @@
                 </div>
             </section>
         </main>
-            <footer>
-                <p class="bg-light text-center py-5 mt-3">Copyright 2022 - <a href="#">Quick-News</a></p>
-            </footer>
-        
+        <footer>
+            <p class="bg-light text-center py-5 mt-3">Copyright 2022 - <a href="#">Quick-News</a></p>
+        </footer>
+
     </div>
 
 
